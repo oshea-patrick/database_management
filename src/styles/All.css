@@ -594,3 +594,7 @@
     height: 25px;
     color: black;
   }
+
+  .glow:hover{
+    color : blue;
+  }
