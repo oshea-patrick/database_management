@@ -24,8 +24,6 @@
   }
   
   .body {
-    border: 1px solid #000;
-    border-radius: 1px;
     background-color: #6caecb;
     color: #333;
     text-shadow: 1px 1px 6px #000;
@@ -297,7 +295,16 @@
   }
   
   .submit-button {
+    background-color: #3898ec;
     text-align: left;
+    border: none;
+    color: white;
+    height: 40px;
+    width: 80px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
   }
   
   .form {
@@ -581,5 +588,9 @@
     font-size: 20px;
   }
   input {
+    color: black;
+  }
+  .w-input {
+    height: 25px;
     color: black;
   }
