@@ -566,3 +566,20 @@
     font-style: normal;
     font-display: swap;
   }
+
+  table, th, td, tr {
+    width:100%;
+    border: 1px solid black;
+    border-collapse: collapse;
+    justify-content: center;
+    text-align: center;
+    table-layout: fixed;
+    color: white;
+    box-shadow: none;
+  }
+  th {
+    font-size: 20px;
+  }
+  input {
+    color: black;
+  }
