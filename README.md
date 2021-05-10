@@ -1,5 +1,10 @@
 # Welcome to our database final project
 
+## Contributors
+- Patrick O'Shea
+- Yaniv Kovalski
+- Parker Rowley
+
 ## To clone the repository
 
 ```
@@ -166,3 +171,7 @@ Response on Failure: 'Failed'
 ## Database Diagram
 
 <img src='Capture.PNG' />
+
+## Database Schema
+
+
