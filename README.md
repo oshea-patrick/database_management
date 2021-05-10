@@ -48,6 +48,120 @@ body : {
 Response on Success: [true, {"email": "hpotter1@students.hogwarts.edu", "first_name": "Harry1", "last_name": "Potter", "password": "test"}]
 <br/>
 Response on Failure: [false, ""]
+<br/>
+<br/>
+
+URL: ENDPOINT/signup
+<br/>
+METHOD: POST
+<br/>
+body : {
+<br/>
+    "email" : "",
+<br/>
+    "first_name" : "",
+<br/>
+    "last_name" : "",
+<br/>
+    "password" : ""
+<br/>
+}
+<br/>
+Response on Success: 'Success'
+<br/>
+Response on Failure: 'Failed'
+<br/>
+<br/>
+
+URL: ENDPOINT/getLocations
+<br/>
+METHOD: POST
+<br/>
+body : no body
+<br/>
+Response on Success: [location object, ...]
+<br/>
+Response on Failure: Error
+<br/>
+<br/>
+
+URL: ENDPOINT/getReservations
+<br/>
+METHOD: POST
+<br/>
+body : no body
+<br/>
+Response on Success: [reservation object, ...]
+<br/>
+Response on Failure: Error
+<br/>
+<br/>
+
+URL: ENDPOINT/joinReservation
+<br/>
+METHOD: POST
+<br/>
+body : {
+<br/>
+    "email" : "",
+<br/>
+    "time_block" : "",
+<br/>
+    "location_name" : "",
+<br/>
+    "address" : ""
+<br/>
+}
+<br/>
+Response on Success: 'Success'
+<br/>
+Response on Failure: 'Failed'
+<br/>
+<br/>
+
+URL: ENDPOINT/getRegisteredReservations
+<br/>
+METHOD: POST
+<br/>
+body : no body
+<br/>
+Response on Success: [sign object, ...]
+<br/>
+Response on Failure: Error
+<br/>
+<br/>
+
+URL: ENDPOINT/getItems
+<br/>
+METHOD: POST
+<br/>
+body : no body
+<br/>
+Response on Success: [item object, ...]
+<br/>
+Response on Failure: Error
+<br/>
+<br/>
+
+URL: ENDPOINT/checkoutItem
+<br/>
+METHOD: POST
+<br/>
+body : {
+<br/>
+    "item_name" : "",
+<br/>
+    "location" : "",
+<br/>
+    "email" : ""
+<br/>
+}
+<br/>
+Response on Success: 'Success'
+<br/>
+Response on Failure: 'Failed'
+<br/>
+<br/>
 
 ## Database Diagram
 
