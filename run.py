@@ -48,14 +48,12 @@ def insertUser():
     global userDao
     return userDao.insertUser(u)
 
-# ----------------------- To DO ---------------------------
-
 @app.route('/getLocations', methods=['POST'])
 def getLocations():
     global locationDao
     return locationDao.getLocations()
 
-@app.route('getReservations', methods=['POST'])
+@app.route('/getReservations', methods=['POST'])
 def getReservations():
     global reserveDao
     return reserveDao.getReservations()
@@ -66,6 +64,12 @@ def joinReservation():
     global reserveDao
     return reserveDao.joinReservation(s)
 
+@app.route('/getRegisteredReservations', methods=['POST'])
+def getRegisteredReservations():
+    global reserveDao
+    return reserveDao.getSignups()
+
+    
 @app.route('/getItems', methods=['POST'])
 def getItems():
     global itemDao
@@ -76,6 +80,8 @@ def checkoutItem():
     c = extractCheck(request)
     global itemDao
     return itemDao.checkoutItem(c)
+
+# ----------------------- To DO ---------------------------
 
 
 
