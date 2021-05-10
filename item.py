@@ -1,6 +1,6 @@
 class Item:
   
-    def __init__(self, name, location, stock:
+    def __init__(self, name, location, stock):
         self.name = name
         self.location = location
         self.stock = stock

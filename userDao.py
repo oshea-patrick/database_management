@@ -27,22 +27,10 @@ class UserDao:
             print(str(e))
         print("Successfully connected!")
 
-    def getAllUsers(self, u):
-        self.connect()
-        c = self.connection.cursor()
-        c.execute('select * from POSHEA1."User"')
-        a = []
-        for row in c:
-            temp = User('','','','','','','','', '')
-            temp.adapt(row)
-            a.append(temp.dictify())
-        self.disconnect()
-        return json.dumps(a)
-
     def getUser(self, u):
         self.connect()
         c = self.connection.cursor()
-        c.execute('select * from POSHEA1."User" where email=' + "'" + u.email + "'")
+        c.execute('select * from POSHEA1."USER" where email=' + "'" + u.email + "'")
         amount = 0
         first = None
         for row in c:
@@ -53,27 +41,15 @@ class UserDao:
             self.disconnect()
             return json.dumps([False, ""])
         else:
-            temp = User('','','','','','','','', '')
+            temp = User('','','','')
             temp.adapt(first)
             self.disconnect()
             return json.dumps([True, temp.dictify()])
 
-    def getAllUsers(self):
-        self.connect()
-        c = self.connection.cursor()
-        c.execute('select * from POSHEA1."User"')
-        out = []
-        for row in c:
-            temp = User('','','','','','','','', '')
-            temp.adapt(row)
-            out.append(temp.dictify())
-        self.disconnect()
-        return json.dumps(out)
-
     def insertUser(self, u):
         self.connect()
         c = self.connection.cursor()
-        sql = 'INSERT INTO POSHEA1."User" '+ '(FNAME, LNAME, STREET, CITY, STATE, ZIP, PHONE, EMAIL, ID)'+ ' VALUES ('+ "'" + u.fname + "','" + u.lname + "','" + u.street + "','" + u.city + "','" + u.state +"','" + u.zip + "','" + u.phone + "','" + u.email + "'" + ",my_seq.nextval)"
+        sql = 'INSERT INTO POSHEA1."USER" '+ '(EMAIL, FIRST_NAME, LAST_NAME, PASSWORD)'+ ' VALUES ('+ "'" + u.email + "','" + u.first_name + "','" + u.last_name + "','" + u.password + "')"
         try:
             c.execute(sql)
             self.connection.commit()
@@ -87,7 +63,7 @@ class UserDao:
         self.connect()
         print(u.dictify())
         c = self.connection.cursor()
-        sql = 'UPDATE POSHEA1."User" ' + "set fname='" + u.fname + "', lname='" + u.lname + "', street='" + u.street + "', city='" + u.city + "', state='" + u.state + "', zip='" + u.zip + "', phone='" + u.phone + "', email='" + u.email + "' where email='" + str(u.email) + "'"
+        sql = 'UPDATE POSHEA1."USER" ' + "set EMAIL='" + u.email + "', FIRST_NAME='" + u.first_name + "', LAST_NAME='" + u.last_name + "', PASSWORD='" + u.password + "' where email='" + str(u.email) + "'"
         c.execute(sql)
         self.connection.commit()
         self.disconnect()
@@ -96,7 +72,7 @@ class UserDao:
     def deleteUser(self, u):
         self.connect()
         c = self.connection.cursor()
-        sql = 'DELETE FROM POSHEA1."User" where email=' + "'" +str(u.email) + "'"
+        sql = 'DELETE FROM POSHEA1."USER" where email=' + "'" +str(u.email) + "'"
         c.execute(sql)
         self.connection.commit()
         self.disconnect()

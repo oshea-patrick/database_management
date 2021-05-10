@@ -1,6 +1,6 @@
 class Location:
   
-    def __init__(self, name, address:
+    def __init__(self, name, address):
         self.name = name
         self.address = address
 
