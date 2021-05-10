@@ -27,7 +27,7 @@ Backend: Python3/Flask hosted at 18.221.103.54:5000
 Database: Oracle hosted at csc325spring2021.cjjvanphib99.us-west-2.rds.amazonaws.com:1521
 <br/>
 
-## API MEthods
+## API Methods
 
 URL: ENDPOINT/getUser
 <br/>
