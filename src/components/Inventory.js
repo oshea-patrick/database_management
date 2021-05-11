@@ -1,7 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/All.css'
+import axios from 'axios';
 
 function Inventory () {
+
+    const [items, setItems] = useState([])
+
+    async function inventory(){
+        var response = await axios.post("http://18.221.103.54:5000/getItems")
+        setItems(response.data)
+    }
+
+    inventory()
+
     return (
         <div className="body">
             <div className="div-block-8">
@@ -55,5 +66,4 @@ function Inventory () {
         </div>
     )
 }
-
 export default Inventory
