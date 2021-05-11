@@ -8,12 +8,14 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import Inventory from './components/Inventory';
 import Reservations from './components/Reservations';
+import React, { useState, useEffect } from 'react';
 
 function App() {
+  const [name,setName] = useState("User")
   return (
     <div className="App">
       <Router>
-        <Banner />
+        <Banner setName={setName}/>
         <Switch>
           <Route path='/' exact={true} component={Home} />
           <Route path='/home' component={Home} />
