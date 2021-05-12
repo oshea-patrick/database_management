@@ -3,7 +3,7 @@ import '../styles/All.css'
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
 
-function Signup () {
+function Signup (props) {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -40,6 +40,7 @@ function Signup () {
     }
     return (
             <div className="div-block-6">
+                {!props.name?
                 <div className="div-block-7">
                 <h1 className="heading-3">Welcome to punch-in!</h1>
                 <h3 className="heading-3">Sign Up Below!</h3>
@@ -53,7 +54,9 @@ function Signup () {
                     <input type="button" value="Sign Up" data-wait="Please wait..." className="submit-button w-button" onClick={() => { signup() } }/>
                     </form>
                 </div>
-                </div>
+                </div>:
+                <h1>You're already signed in - {props.name}</h1>
+                }
             </div>
     )
 }

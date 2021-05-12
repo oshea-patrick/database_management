@@ -1,17 +1,30 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../styles/All.css'
 import axios from 'axios';
+import { useHistory } from "react-router-dom";
 
 function Inventory (props) {
 
     const [items, setItems] = useState([])
     const queried = useRef(false)
+    const history = useHistory()
 
     console.log('state change', queried, items.length)
 
     async function inventory(reload=false){
         if (items.length === 0 || reload) {
             var response = await axios.post("http://18.221.103.54:5000/getItems")
+            var res = await axios.post('http://18.221.103.54:5000/getCheckedOutItems')
+            var iter
+            var iter1
+            for (iter of response.data) {
+                iter['count'] = 0
+                for (iter1 of res.data) {
+                    if (iter.location === iter1.location && iter.name === iter1.item_name){
+                        iter['count'] += 1
+                    }
+                }
+            }
             setItems(response.data)
         }
     }
@@ -51,8 +64,8 @@ function Inventory (props) {
                 <tr>
                  <td>{elem.name}</td>
                  <td>{elem.location}</td>
-                 <td>{elem.stock }</td>
-                 <td>{props.email?<input type="button" value="Checkout" onClick={() => {Checkout(elem)}} />:<input type="button" value="Checkout" onClick={() => {}} />}</td>
+                 <td>{elem.stock - elem.count}</td>
+                 <td>{props.email?<input type="button" value="Checkout" onClick={() => {Checkout(elem)}} />:<input type="button" value="Checkout" onClick={() => {history.push('/login', {'alert' : true})}} />}</td>
                 </tr>
                ))}
                 </tbody>

@@ -26,9 +26,9 @@ function App() {
             <Home {...props} email={email} name={name} /> )}/>
           <Route path='/about' render={(props) => (
             <About {...props} email={email} name={name} loggedin={loggedIn}/> )}/>
-          <Route path='/signup' component={Signup} />
+          <Route path='/signup' component={Signup} email={email} name={name}/>
           <Route path='/login' render={(props) => (
-            <Login {...props} setEmail={setEmail} setName={setName} setLogin={setLogin}/>
+            <Login {...props} setEmail={setEmail} setName={setName} setLogin={setLogin} email={email}/>
           )}/>
           <Route path='/inventory' render={(props) => (
             <Inventory {...props} email={email} name={name} loggedin={loggedIn} />
