@@ -25,7 +25,7 @@ npm start
 ```
 
 ## Stack implmentation
-Frontend: Nodejs/React (hosted locally)
+Frontend: React/Javascript/HTML/CSS (hosted locally)
 <br/>
 Backend: Python3/Flask hosted at 18.221.103.54:5000
 <br/>
@@ -86,7 +86,7 @@ body : no body
 <br/>
 Response on Success: [location object, ...]
 <br/>
-Response on Failure: Error
+Response on Failure: []
 <br/>
 <br/>
 
@@ -98,7 +98,7 @@ body : no body
 <br/>
 Response on Success: [reservation object, ...]
 <br/>
-Response on Failure: Error
+Response on Failure: []
 <br/>
 <br/>
 
@@ -132,7 +132,7 @@ body : no body
 <br/>
 Response on Success: [sign object, ...]
 <br/>
-Response on Failure: Error
+Response on Failure: []
 <br/>
 <br/>
 
@@ -144,7 +144,7 @@ body : no body
 <br/>
 Response on Success: [item object, ...]
 <br/>
-Response on Failure: Error
+Response on Failure: []
 <br/>
 <br/>
 
@@ -167,6 +167,19 @@ Response on Success: 'Success'
 Response on Failure: 'Failed'
 <br/>
 <br/>
+
+URL: ENDPOINT/getCheckedOutItems
+<br/>
+METHOD: POST
+<br/>
+body : no body
+<br/>
+Response on Success: [check object, ...]
+<br/>
+Response on Failure: []
+<br/>
+<br/>
+
 
 ## Database Diagram
 
