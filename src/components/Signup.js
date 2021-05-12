@@ -47,12 +47,6 @@ function Signup () {
                     <div><label className="field-label">Confirm Password:</label><input type="text" className="w-input" maxlength="256" name="name-5" data-name="Name 5" placeholder="" id="name-5"/></div>
                     <input type="button" value="Sign Up" data-wait="Please wait..." className="submit-button w-button" onClick={() => { signup() } }/>
                     </form>
-                    <div className="w-form-done">
-                    <div>Thank you! Your submission has been received!</div>
-                    </div>
-                    <div className="w-form-fail">
-                    <div>Oops! Something went wrong while submitting the form.</div>
-                    </div>
                 </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/All.css'
 
-function Reservations () {
+function Reservations (props) {
     return (
         <div className="body">
             <div className="div-block-8">

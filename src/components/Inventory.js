@@ -2,16 +2,20 @@ import React, { useState, useEffect } from 'react';
 import '../styles/All.css'
 import axios from 'axios';
 
-function Inventory () {
+function Inventory (props) {
 
     const [items, setItems] = useState([])
 
     async function inventory(){
         var response = await axios.post("http://18.221.103.54:5000/getItems")
+        console.log(response.data)
         setItems(response.data)
+        console.log(props.email)
     }
 
-    inventory()
+    if(items.length == 0){
+        inventory()
+    }
 
     return (
         <div className="body">
@@ -19,43 +23,25 @@ function Inventory () {
                 <h1 className="heading-5">Inventory</h1>
                 <div className="div-block-11">
                 <div className="html-embed w-embed">
-                    <table>
+                <table>
+                <thead>
                     <tr>
-                        <th>Item</th>
-                        <th>Location</th>
-                        <th># Left In Stock</th>
-                        <th>Add To Cart</th>
+                    <th>Item</th>
+                    <th>Location</th>
+                    <th>Left in Stock</th>
+                    <th>Check Out</th>
                     </tr>
-                    <tr>
-                        <td>5lb Dumbell</td>
-                        <td>Stonehill College</td>
-                        <td>5</td>
-                        <td><input type="button" value="Add" /></td>
-                    </tr>
-                    <tr>
-                        <td>10lb Dumbell</td>
-                        <td>Stonehill College</td>
-                        <td>7</td>
-                        <td><input type="button" value="Add" /></td>
-                    </tr>
-                    <tr>
-                        <td>15lb Dumbell</td>
-                        <td>Stonehill College</td>
-                        <td>0</td>
-                        <td><input type="button" value="Restock" /></td>
-                    </tr>
-                    <tr>
-                        <td>20lb Dumbell</td>
-                        <td>Stonehill College</td>
-                        <td>2</td>
-                        <td><input type="button" value="Add" /></td>
-                    </tr>
-                    <tr>
-                        <td>25lb Dumbell</td>
-                        <td>Stonehill College</td>
-                        <td>5</td>
-                        <td><input type="button" value="Add" /></td>
-                    </tr>
+                </thead>
+                <tbody>
+               {items.map((elem)=>(
+                <tr>
+                 <td>{elem.name}</td>
+                 <td>{elem.location}</td>
+                 <td>{elem.stock }</td>
+                 <td><input type="button" value="Checkout"/></td>
+                </tr>
+               ))}
+                </tbody>
                     </table>
                 </div>
                 </div>

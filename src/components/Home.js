@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/All.css'
+import { useHistory } from "react-router-dom";
 
-function Home () {
+function Home (props) {
     const [count, setCount] = useState(0)
     const [numbers, setNumbers] = useState([0])
+    const history = useHistory();
 
     function increment () {
         setNumbers([...numbers, count + 1])

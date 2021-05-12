@@ -14,9 +14,9 @@ function Login (props) {
 
     function routeChange(email) { 
     let path = `/Home`; 
-    //passes email and authToken values to props param in table.js
     history.push(path,{email:email});
     }
+
 
     async function login(){
         const obj = {
@@ -30,6 +30,9 @@ function Login (props) {
         //setters for first/last names
         if(response.data[0] == true)
         {
+            props.setName(response.data[1].first_name + " " + response.data[1].last_name)
+            props.setEmail(email)
+            props.setLogin(true)
             routeChange(email)
         }
         //console.log(response.data)
@@ -49,7 +52,7 @@ function Login (props) {
                     </form>
                 </div>
                 </div>
-                <div className="text-block">Don&#x27;t have an account with us yet?<br/>No Problem!<br/>Click <a href="/signup">here</a> to register!</div>
+                <div className="text-block">Don&#x27;t have an account with us yet?<br/>No Problem!<br/>Click <p style={{color : 'blue', cursor : 'pointer'}} onClick={() => {history.push('/signup', null)}}>here</p> to register!</div>
             </div>
             <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=604a6813a162378e38db0196" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossOrigin="anonymous"></script>
             <script src="js/webflow.js" type="text/javascript"></script>
