@@ -36,47 +36,61 @@ def extractCheck(request):
     c = Check(request.json['item_name'], request.json['location'], request.json['email'])
     return c
 
-@app.route("/getUser", methods=['POST'])
+@app.route("/getUser", methods=['POST', 'OPTIONS'])
 def getUser():
+    if request.method == 'OPTIONS':
+        return 'true'
     u = extractUser(request)
     global userDao
     return userDao.getUser(u)
 
-@app.route("/signup", methods=['POST'])
+@app.route("/signup", methods=['POST', 'OPTIONS'])
 def insertUser():
+    if request.method == 'OPTIONS':
+        return 'true'
     u = extractUser(request)
     global userDao
     return userDao.insertUser(u)
 
-@app.route('/getLocations', methods=['POST'])
+@app.route('/getLocations', methods=['POST', 'OPTIONS'])
 def getLocations():
+    if request.method == 'OPTIONS':
+        return 'true'
     global locationDao
     return locationDao.getLocations()
 
-@app.route('/getReservations', methods=['POST'])
+@app.route('/getReservations', methods=['POST', 'OPTIONS'])
 def getReservations():
+    if request.method == 'OPTIONS':
+        return 'true'
     global reserveDao
     return reserveDao.getReservations()
 
-@app.route('/joinReservation', methods=['POST'])
+@app.route('/joinReservation', methods=['POST', 'OPTIONS'])
 def joinReservation():
     s = extractSign(request)
     global reserveDao
     return reserveDao.joinReservation(s)
 
-@app.route('/getRegisteredReservations', methods=['POST'])
+@app.route('/getRegisteredReservations', methods=['POST', 'OPTIONS'])
 def getRegisteredReservations():
+    if request.method == 'OPTIONS':
+        return 'true'
     global reserveDao
     return reserveDao.getSignups()
 
     
-@app.route('/getItems', methods=['POST'])
+@app.route('/getItems', methods=['POST', 'OPTIONS'])
 def getItems():
+    if request.method == 'OPTIONS':
+        return 'true'
     global itemDao
     return itemDao.getItems()
 
-@app.route('/checkoutItem', methods=['POST'])
+@app.route('/checkoutItem', methods=['POST', 'OPTIONS'])
 def checkoutItem():
+    if request.method == 'OPTIONS':
+        return 'true'
     c = extractCheck(request)
     global itemDao
     return itemDao.checkoutItem(c)
