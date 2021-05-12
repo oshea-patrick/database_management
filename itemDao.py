@@ -31,15 +31,19 @@ class ItemDao:
 
     def getItems(self):
         self.connect()
-        c = self.connection.cursor()
-        c.execute('select * from POSHEA1."ITEM"')
-        a = []
-        for row in c:
-            temp = Item('','', 0)
-            temp.adapt(row)
-            a.append(temp.dictify())
-        self.disconnect()
-        return json.dumps(a)
+        try:
+            c = self.connection.cursor()
+            c.execute('select * from POSHEA1."ITEM"')
+            a = []
+            for row in c:
+                temp = Item('','', 0)
+                temp.adapt(row)
+                a.append(temp.dictify())
+            self.disconnect()
+            return json.dumps(a)
+        except:
+            self.disconnect()
+            return json.dumps([])
 
     def checkoutItem(self, j):
         self.connect()
