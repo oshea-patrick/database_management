@@ -10,6 +10,7 @@ class ReserveDao:
     def disconnect(self):
         try:
             self.connection.close()
+            print("Connection closed")
         except Exception as e:
             print(str(e))
 
