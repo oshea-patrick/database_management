@@ -97,6 +97,13 @@ def checkoutItem():
     global itemDao
     return itemDao.checkoutItem(c)
 
+@app.route('/getCheckedOutItems', methods=['POST', 'OPTIONS']):
+def getCheckedOutItems():
+    if request.method == 'OPTIONS':
+        return 'true'
+    global itemDao
+    return itemDao.getCheckedOutItems()
+
 # ----------------------- To DO ---------------------------
 
 

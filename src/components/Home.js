@@ -14,15 +14,6 @@ function Home (props) {
 
     return (
         <div className="body">
-            <h1>Hello {count} </h1>
-            <input type="button" onClick={ () => { increment() }} value="Click Me"/>
-            {numbers.map((number) => (
-            <div>
-                <strong className="glow">{number}</strong>
-                <br/>
-            </div>
-            ))
-            }
             <div className="div-block-4">
                 <h1 className="heading">Welcome to punch-in!<br/>How can we help<br/>you?</h1> <a href="/inventory" className="button">Inventory</a> <a href="/reservations" className="button">Reservations</a>
             </div>

@@ -6,16 +6,27 @@ function Inventory (props) {
 
     const [items, setItems] = useState([])
 
-    async function inventory(){
-        var response = await axios.post("http://18.221.103.54:5000/getItems")
-        console.log(response.data)
-        setItems(response.data)
-        console.log(props.email)
+    async function inventory(reload=false){
+        if (items.length === 0 || reload) {
+            var response = await axios.post("http://18.221.103.54:5000/getItems")
+            setItems(response.data)
+        }
     }
 
     if(items.length == 0){
         inventory()
     }
+
+    async function Checkout(item) {
+        const obj = {
+            item_name : item.name,
+            email : props.email,
+            location : item.location
+        }
+        var response = await axios.post('http://18.221.103.54:5000/checkoutItem', obj)
+        await inventory(true)
+    }
+    
 
     return (
         <div className="body">
@@ -38,7 +49,7 @@ function Inventory (props) {
                  <td>{elem.name}</td>
                  <td>{elem.location}</td>
                  <td>{elem.stock }</td>
-                 <td><input type="button" value="Checkout"/></td>
+                 <td>{props.email?<input type="button" value="Checkout" onClick={() => {Checkout(elem)}} />:<input type="button" value="Checkout" onClick={() => {}} />}</td>
                 </tr>
                ))}
                 </tbody>

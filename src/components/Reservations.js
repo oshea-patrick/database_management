@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../styles/All.css'
 import axios from 'axios';
+import { useHistory } from "react-router-dom";
 
 function Reservations(props) {
     //getters/setters for the enroll button funtion in the table
@@ -13,41 +14,45 @@ function Reservations(props) {
     const [reservs, setReservations] = useState([])
     const [registered, setRegistered] = useState([])
 
-    async function reservations(){
-        var response = await axios.post("http://18.221.103.54:5000/getReservations")
-        var response1 = await axios.post("http://18.221.103.54:5000/getRegisteredReservations")
-        //console.log(response1.data)
-        //console.log(response.data)
-        var n = []
-        var item
-        var item1
-        for (item of response.data){
-            var d = {}
-            d["count"]=0
-            d["emails"]=[]
-            d["time_block"]=item.time_block
-            d["location"]=item.location
-            d["spots_available"]=item.spots_available
-            for (item1 of response1.data){
-                if(item1.location_name === item.location){
-                    d["address"] = item1.address
+    const history = useHistory()
+    const fetch = useRef(true)
+
+    async function reservations(reload=false){
+        if (fetch.current === true || reload) {
+            fetch.current = false
+            var response = await axios.post("http://18.221.103.54:5000/getReservations")
+            var response1 = await axios.post("http://18.221.103.54:5000/getRegisteredReservations")
+            var n = []
+            var item
+            var item1
+            for (item of response.data){
+                var d = {}
+                d["count"]=0
+                d["emails"]=[]
+                d["time_block"]=item.time_block
+                d["location"]=item.location
+                d["spots_available"]=item.spots_available
+                for (item1 of response1.data){
+                    if(item1.location_name === item.location){
+                        d["address"] = item1.address
+                    }
+                    if(item1.location_name === item.location && item1.time_block === item.time_block){
+                        d["count"]+=1
+                        d["emails"].push(item1.email)
+                    }
                 }
-                if(item1.location_name === item.location && item1.time_block === item.time_block){
-                    d["count"]+=1
-                    d["emails"].push(item1.email)
-                }
+                n.push(d)
             }
-            n.push(d)
-        }
-        console.log(n)
-        setReservations(response.data)
-        setRegistered(response1.data)
-        setData(n)
+            console.log(n)
+            setReservations(response.data)
+            setRegistered(response1.data)
+            setData(n)
+    }
     }
 
     async function enroll(dict){
         const obj = {
-            'email' : dict.email,
+            'email' : props.email,
             'time_block' : dict.time_block,
             'location_name' : dict.location,
             'address' : dict.address 
@@ -61,6 +66,7 @@ function Reservations(props) {
         //console.log(response2.data.location)
         setAddress(response2.data.address)
         //console.log(response2.data.address)
+        await reservations(true)
     }
 
     if(reservs.length == 0){
@@ -94,7 +100,7 @@ function Reservations(props) {
                             return <li>{e}</li>
                         })} </ol>
                         </td>
-                        <td><input type="button" value="Enroll" onClick={() => { enroll(elem) } }/></td>
+                        <td> {props.email?<input type="button" value="Enroll" onClick={() => { enroll(elem) } }/>:<input type="button" value="Enroll" onClick={() => { history.push('/login', {'alert' : true}) } }/>}</td>
                         </tr>
                         ))}
                         </tbody>

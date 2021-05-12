@@ -28,8 +28,13 @@ function Signup () {
         console.log(obj)
         var response = await axios.post("http://18.221.103.54:5000/signup",obj)
         //setters for first/last names
-        console.log(response.data[0])
-        routeChange(email)
+        if (response.data === 'Failed') {
+            alert('An error occured, most likely email is already in use or fields are blank...')
+        }
+        else {
+            routeChange(email)
+        }
+        //
         //console.log(response.data)
         
     }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../styles/All.css'
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
@@ -9,12 +9,18 @@ function Login (props) {
     const [password, setPassword] = useState('')
     const [firstname, setFirstName] = useState('')
     const [lastname, setLastName] = useState('')
+    const alert1= useRef(false)
 
     const history = useHistory();
 
     function routeChange(email) { 
     let path = `/Home`; 
     history.push(path,{email:email});
+    }
+
+    if (props.location.state && props.location.state.alert && !alert1.current) {
+        alert('Please log in to use that feature...')
+        alert1.current = true
     }
 
 
@@ -30,10 +36,16 @@ function Login (props) {
         //setters for first/last names
         if(response.data[0] == true)
         {
-            props.setName(response.data[1].first_name + " " + response.data[1].last_name)
-            props.setEmail(email)
-            props.setLogin(true)
-            routeChange(email)
+            if (response.data[1].password === password) {
+                props.setName(response.data[1].first_name + " " + response.data[1].last_name)
+                props.setEmail(email)
+                props.setLogin(true)
+                routeChange(email)
+            }
+            else {
+                setPassword('')
+                alert('Incorrect Password')
+            }
         }
         //console.log(response.data)
     }

@@ -29,6 +29,22 @@ class ItemDao:
             print(str(e))
         print("Successfully connected!")
 
+    def getCheckedOutItems(self):
+        self.connect()
+        try:
+            c = self.connection.cursor()
+            c.execute('select * from POSHEA1."CHECK"')
+            a = []
+            for row in c:
+                temp = Check('','', '')
+                temp.adapt(row)
+                a.append(temp.dictify())
+            self.disconnect()
+            return json.dumps(a)
+        except:
+            self.disconnect()
+            return json.dumps([])
+
     def getItems(self):
         self.connect()
         try:
