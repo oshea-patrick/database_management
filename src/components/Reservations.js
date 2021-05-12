@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../styles/All.css'
 import axios from 'axios';
 
@@ -12,8 +12,15 @@ function Reservations(props) {
 
     const [reservs, setReservations] = useState([])
     const [registered, setRegistered] = useState([])
+    const queried = useRef(false)
+
+    console.log('state update', data.length)
 
     async function reservations(){
+        if (queried.current == true) {
+            return
+        }
+        queried.current = true
         var response = await axios.post("http://18.221.103.54:5000/getReservations")
         var response1 = await axios.post("http://18.221.103.54:5000/getRegisteredReservations")
         //console.log(response1.data)
@@ -39,20 +46,29 @@ function Reservations(props) {
             }
             n.push(d)
         }
-        console.log(n)
+        
         setReservations(response.data)
         setRegistered(response1.data)
-        setData(n)
+        if (data.length == 0 && n.length !== 0) {
+            console.log(n)
+            setData(n)
+        }
+        if (n.length == 0) {
+            queried.current = false
+        }
     }
 
-    async function enroll(dict){
+    async function enroll(dict) {
         const obj = {
-            'email' : dict.email,
+            'email' : props.email,
             'time_block' : dict.time_block,
             'location_name' : dict.location,
             'address' : dict.address 
         }
         var response2 = await axios.post("http://18.221.103.54:5000/joinReservation",obj)
+        queried.current = false
+        await reservations()
+
         setEmail(response2.data.email)
         //console.log(response2.data.email)
         setTimeBlock(response2.data.time_block)
@@ -85,13 +101,13 @@ function Reservations(props) {
                         </thead>
                         <tbody>
                         {data.map((elem)=>(
-                        <tr>
+                        <tr key={elem.location+elem.time_block}>
                         <td>{elem.time_block}</td>
                         <td>{elem.location}</td>
                         <td>{elem.spots_available - elem.count }</td>
                         <td> <ol>
                             {elem.emails.map((e) => {
-                            return <li>{e}</li>
+                            return <li key={e+elem.location+elem.time}>{e}</li>
                         })} </ol>
                         </td>
                         <td><input type="button" value="Enroll" onClick={() => { enroll(elem) } }/></td>

@@ -1,16 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../styles/All.css'
 import axios from 'axios';
 
 function Inventory (props) {
 
     const [items, setItems] = useState([])
+    const queried = useRef(false)
+
+    console.log('state change', queried, items.length)
 
     async function inventory(){
+        if (queried.current === true) {
+            return
+        }
+        queried.current = true
         var response = await axios.post("http://18.221.103.54:5000/getItems")
-        console.log(response.data)
-        setItems(response.data)
-        console.log(props.email)
+        if (response.data) {
+            console.log(response.data)
+            setItems(response.data)
+        }
     }
 
     if(items.length == 0){
