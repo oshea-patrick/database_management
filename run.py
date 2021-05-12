@@ -68,6 +68,8 @@ def getReservations():
 
 @app.route('/joinReservation', methods=['POST', 'OPTIONS'])
 def joinReservation():
+    if request.method == 'OPTIONS':
+        return 'true'
     s = extractSign(request)
     global reserveDao
     return reserveDao.joinReservation(s)
