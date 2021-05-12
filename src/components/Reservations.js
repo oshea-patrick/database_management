@@ -1,7 +1,72 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/All.css'
+import axios from 'axios';
 
-function Reservations (props) {
+function Reservations(props) {
+    //getters/setters for the enroll button funtion in the table
+    const [email, setEmail] = useState('')
+    const [timeblock, setTimeBlock] = useState('')
+    const [location, setLocation] = useState('')
+    const [address, setAddress] = useState('')
+    const [data, setData] = useState([])
+
+    const [reservs, setReservations] = useState([])
+    const [registered, setRegistered] = useState([])
+
+    async function reservations(){
+        var response = await axios.post("http://18.221.103.54:5000/getReservations")
+        var response1 = await axios.post("http://18.221.103.54:5000/getRegisteredReservations")
+        //console.log(response1.data)
+        //console.log(response.data)
+        var n = []
+        var item
+        var item1
+        for (item of response.data){
+            var d = {}
+            d["count"]=0
+            d["emails"]=[]
+            d["time_block"]=item.time_block
+            d["location"]=item.location
+            d["spots_available"]=item.spots_available
+            for (item1 of response1.data){
+                if(item1.location_name === item.location){
+                    d["address"] = item1.address
+                }
+                if(item1.location_name === item.location && item1.time_block === item.time_block){
+                    d["count"]+=1
+                    d["emails"].push(item1.email)
+                }
+            }
+            n.push(d)
+        }
+        console.log(n)
+        setReservations(response.data)
+        setRegistered(response1.data)
+        setData(n)
+    }
+
+    async function enroll(dict){
+        const obj = {
+            'email' : dict.email,
+            'time_block' : dict.time_block,
+            'location_name' : dict.location,
+            'address' : dict.address 
+        }
+        var response2 = await axios.post("http://18.221.103.54:5000/joinReservation",obj)
+        setEmail(response2.data.email)
+        //console.log(response2.data.email)
+        setTimeBlock(response2.data.time_block)
+        //console.log(response2.data.time_block)
+        setLocation(response2.data.location)
+        //console.log(response2.data.location)
+        setAddress(response2.data.address)
+        //console.log(response2.data.address)
+    }
+
+    if(reservs.length == 0){
+        reservations()
+    }
+
     return (
         <div className="body">
             <div className="div-block-8">
@@ -19,13 +84,19 @@ function Reservations (props) {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>8:00AM-9:00AM</td>
-                                <td>Spoco 001</td>
-                                <td>5</td>
-                                <td>Patrick O'Shea<br/>-----<br/>-----<br/>-----<br/>-----</td>
-                                <td><input type="button" value="Enroll" /></td>
-                            </tr>
+                        {data.map((elem)=>(
+                        <tr>
+                        <td>{elem.time_block}</td>
+                        <td>{elem.location}</td>
+                        <td>{elem.spots_available - elem.count }</td>
+                        <td> <ol>
+                            {elem.emails.map((e) => {
+                            return <li>{e}</li>
+                        })} </ol>
+                        </td>
+                        <td><input type="button" value="Enroll" onClick={() => { enroll(elem) } }/></td>
+                        </tr>
+                        ))}
                         </tbody>
                     </table>
                 </div>
