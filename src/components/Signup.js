@@ -9,6 +9,7 @@ function Signup (props) {
     const [password, setPassword] = useState('')
     const [firstname, setFirstName] = useState('')
     const [lastname, setLastName] = useState('')
+    const [pass1, setPass1] = useState('')
     const history = useHistory();
 
     function routeChange(email) { 
@@ -25,7 +26,12 @@ function Signup (props) {
             'password' : password  
         }
 
-        console.log(obj)
+        if (pass1 !== password) {
+            alert('passwords do not match')
+            setPass1('')
+            return
+        }
+
         var response = await axios.post("http://18.221.103.54:5000/signup",obj)
         //setters for first/last names
         if (response.data === 'Failed') {
@@ -50,7 +56,7 @@ function Signup (props) {
                     <div><label className="field-label">Last Name:</label><input type="text" className="w-input" maxlength="256" name="name" data-name="Name" placeholder="" id="name" value={lastname} onChange={(event) => {setLastName(event.target.value)} } /></div>
                     <div><label className="field-label">Email Address:</label><input type="text" className="w-input" maxlength="256" name="name-3" data-name="Name 3" placeholder="" id="name-3" value={email} onChange={(event) => {setEmail(event.target.value)} }/></div>
                     <div><label className="field-label">Password:</label><input type="text" className="w-input" maxlength="256" name="name-4" data-name="Name 4" placeholder="" id="name-4" value={password} onChange={(event) => {setPassword(event.target.value)} }/></div>
-                    <div><label className="field-label">Confirm Password:</label><input type="text" className="w-input" maxlength="256" name="name-5" data-name="Name 5" placeholder="" id="name-5"/></div>
+                    <div><label className="field-label">Confirm Password:</label><input value={pass1} onChange={(e) => {setPass1(e.target.value)}} type="text" className="w-input" maxlength="256" name="name-5" data-name="Name 5" placeholder="" id="name-5"/></div>
                     <input type="button" value="Sign Up" data-wait="Please wait..." className="submit-button w-button" onClick={() => { signup() } }/>
                     </form>
                 </div>
