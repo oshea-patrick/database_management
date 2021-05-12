@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../styles/All.css'
 import axios from 'axios';
 
 function Inventory (props) {
 
     const [items, setItems] = useState([])
+    const queried = useRef(false)
+
+    console.log('state change', queried, items.length)
 
     async function inventory(reload=false){
         if (items.length === 0 || reload) {

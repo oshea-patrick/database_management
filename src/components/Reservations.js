@@ -13,6 +13,9 @@ function Reservations(props) {
 
     const [reservs, setReservations] = useState([])
     const [registered, setRegistered] = useState([])
+    const queried = useRef(false)
+
+    console.log('state update', data.length)
 
     const history = useHistory()
     const fetch = useRef(true)
@@ -50,7 +53,7 @@ function Reservations(props) {
     }
     }
 
-    async function enroll(dict){
+    async function enroll(dict) {
         const obj = {
             'email' : props.email,
             'time_block' : dict.time_block,
@@ -58,6 +61,9 @@ function Reservations(props) {
             'address' : dict.address 
         }
         var response2 = await axios.post("http://18.221.103.54:5000/joinReservation",obj)
+        queried.current = false
+        await reservations()
+
         setEmail(response2.data.email)
         //console.log(response2.data.email)
         setTimeBlock(response2.data.time_block)
@@ -91,13 +97,13 @@ function Reservations(props) {
                         </thead>
                         <tbody>
                         {data.map((elem)=>(
-                        <tr>
+                        <tr key={elem.location+elem.time_block}>
                         <td>{elem.time_block}</td>
                         <td>{elem.location}</td>
                         <td>{elem.spots_available - elem.count }</td>
                         <td> <ol>
                             {elem.emails.map((e) => {
-                            return <li>{e}</li>
+                            return <li key={e+elem.location+elem.time}>{e}</li>
                         })} </ol>
                         </td>
                         <td> {props.email?<input type="button" value="Enroll" onClick={() => { enroll(elem) } }/>:<input type="button" value="Enroll" onClick={() => { history.push('/login', {'alert' : true}) } }/>}</td>
