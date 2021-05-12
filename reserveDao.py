@@ -31,15 +31,19 @@ class ReserveDao:
 
     def getReservations(self):
         self.connect()
-        c = self.connection.cursor()
-        c.execute('select * from POSHEA1."RESERVATION"')
-        a = []
-        for row in c:
-            temp = Reservation('','', 0)
-            temp.adapt(row)
-            a.append(temp.dictify())
-        self.disconnect()
-        return json.dumps(a)
+        try:
+            c = self.connection.cursor()
+            c.execute('select * from POSHEA1."RESERVATION"')
+            a = []
+            for row in c:
+                temp = Reservation('','', 0)
+                temp.adapt(row)
+                a.append(temp.dictify())
+            self.disconnect()
+            return json.dumps(a)
+        except:
+            self.disconnect()
+            return json.dumps([])
 
     def joinReservation(self, u):
         self.connect()
@@ -56,12 +60,16 @@ class ReserveDao:
 
     def getSignups(self):
         self.connect()
-        c = self.connection.cursor()
-        c.execute('select * from POSHEA1."SIGNS"')
-        a = []
-        for row in c:
-            temp = Sign('','', '', '')
-            temp.adapt(row)
-            a.append(temp.dictify())
-        self.disconnect()
-        return json.dumps(a)
+        try:
+            c = self.connection.cursor()
+            c.execute('select * from POSHEA1."SIGNS"')
+            a = []
+            for row in c:
+                temp = Sign('','', '', '')
+                temp.adapt(row)
+                a.append(temp.dictify())
+            self.disconnect()
+            return json.dumps(a)
+        except:
+            self.disconnect()
+            return json.dumps([])
